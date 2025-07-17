@@ -310,6 +310,31 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .footer {
+            width: 100%;
+            background: var(--card-bg);
+            padding: 24px 0 12px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+        .footer-facebook {
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .footer-facebook:hover {
+            transform: scale(1.15);
+            filter: brightness(1.2);
+        }
+        .footer-facebook-icon {
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -363,6 +388,18 @@
             <div id="generatedQuotes"></div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="https://www.facebook.com/KhamkoProduction" target="_blank" rel="noopener" class="footer-facebook" title="Facebook">
+                <svg class="footer-facebook-icon" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="18" cy="18" r="18" fill="#1877F3"/>
+                    <path d="M23.5 18H20V28H16V18H14V15H16V13.5C16 11.57 17.57 10 19.5 10H23V13H21C20.45 13 20 13.45 20 14V15H23.5L23 18Z" fill="white"/>
+                </svg>
+            </a>
+        </div>
+    </footer>
 
     <script>
         // Global variables
