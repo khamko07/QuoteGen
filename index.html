@@ -333,8 +333,8 @@
                     <label for="language">Language:</label>
                     <select id="language">
                         <option value="thai">Thai (ไทย)</option>
-                        <option value="lao">Lao (ລາວ)</option>
                         <option value="english">English</option>
+                        <option value="vietnamese">Vietnamese (Tiếng Việt)</option>
                     </select>
                 </div>
 
@@ -415,8 +415,8 @@
             try {
                 const languageNames = {
                     thai: 'Thai',
-                    lao: 'Lao',
-                    english: 'English'
+                    english: 'English',
+                    vietnamese: 'Vietnamese'
                 };
 
                 const prompt = `Generate 6 funny and sarcastic quotes about ${category} in ${languageNames[language]} language. Each quote should be short, witty, and memorable. Return only the quotes, one per line, without numbering or additional text.`;
