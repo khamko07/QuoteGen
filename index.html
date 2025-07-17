@@ -357,9 +357,10 @@
             <div class="generator-form">
                 <h2 style="margin-bottom: 20px; color: var(--accent);">Generate New Quote</h2>
                 
+
                 <div class="form-group">
                     <label for="language">Language:</label>
-                    <select id="language">
+                    <select id="language" onchange="updateCategoryOptions()">
                         <option value="thai">Thai (ไทย)</option>
                         <option value="english">English</option>
                         <option value="vietnamese">Vietnamese (Tiếng Việt)</option>
@@ -368,16 +369,7 @@
 
                 <div class="form-group">
                     <label for="category">Category:</label>
-                    <select id="category">
-                        <option value="love">Love ❤️</option>
-                        <option value="life">Life 🌟</option>
-                        <option value="work">Work 💼</option>
-                        <option value="friendship">Friendship 👫</option>
-                        <option value="motivation">Motivation 💪</option>
-                        <option value="travel">Travel ✈️</option>
-                        <option value="sadness">Sadness 😢</option>
-                        <option value="humor">Humor 😂</option>
-                    </select>
+                    <select id="category"></select>
                 </div>
 
                 <button class="generate-btn" onclick="generateQuotes()" id="generateBtn">
@@ -434,12 +426,65 @@
             document.getElementById(tabName).classList.add('active');
         }
 
+        // Category options for each language
+        const CATEGORY_OPTIONS = {
+            thai: [
+                { value: 'รัก', label: 'รัก ❤️' },
+                { value: 'ชีวิต', label: 'ชีวิต 🌟' },
+                { value: 'งาน', label: 'งาน 💼' },
+                { value: 'มิตรภาพ', label: 'มิตรภาพ 👫' },
+                { value: 'แรงบันดาลใจ', label: 'แรงบันดาลใจ 💪' },
+                { value: 'ท่องเที่ยว', label: 'ท่องเที่ยว ✈️' },
+                { value: 'เศร้า', label: 'เศร้า 😢' },
+                { value: 'ตลก', label: 'ตลก 😂' }
+            ],
+            english: [
+                { value: 'Love', label: 'Love ❤️' },
+                { value: 'Life', label: 'Life 🌟' },
+                { value: 'Work', label: 'Work 💼' },
+                { value: 'Friendship', label: 'Friendship 👫' },
+                { value: 'Motivation', label: 'Motivation 💪' },
+                { value: 'Travel', label: 'Travel ✈️' },
+                { value: 'Sadness', label: 'Sadness 😢' },
+                { value: 'Humor', label: 'Humor 😂' }
+            ],
+            vietnamese: [
+                { value: 'Tình yêu', label: 'Tình yêu ❤️' },
+                { value: 'Cuộc sống', label: 'Cuộc sống 🌟' },
+                { value: 'Công việc', label: 'Công việc 💼' },
+                { value: 'Tình bạn', label: 'Tình bạn 👫' },
+                { value: 'Động lực', label: 'Động lực 💪' },
+                { value: 'Du lịch', label: 'Du lịch ✈️' },
+                { value: 'Nỗi buồn', label: 'Nỗi buồn 😢' },
+                { value: 'Hài hước', label: 'Hài hước 😂' }
+            ]
+        };
+
+        // Update category options based on selected language
+        function updateCategoryOptions() {
+            const language = document.getElementById('language').value;
+            const categorySelect = document.getElementById('category');
+            categorySelect.innerHTML = '';
+            CATEGORY_OPTIONS[language].forEach(opt => {
+                const option = document.createElement('option');
+                option.value = opt.value;
+                option.textContent = opt.label;
+                categorySelect.appendChild(option);
+            });
+        }
+
+        // Initialize category options on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+            updateCategoryOptions();
+        });
+
         // Generate quotes using Gemini API
         async function generateQuotes() {
             const language = document.getElementById('language').value;
             const category = document.getElementById('category').value;
             const generateBtn = document.getElementById('generateBtn');
-            
+
             if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
                 showMessage('Please replace YOUR_GEMINI_API_KEY_HERE with your actual API key in the code!', 'error');
                 return;
@@ -447,10 +492,9 @@
 
             generateBtn.disabled = true;
             generateBtn.textContent = 'Generating...';
-            
+
             const container = document.getElementById('generatedQuotes');
             container.innerHTML = '<div class="loading">Generating quotes...</div>';
-
 
             try {
                 const languageNames = {
