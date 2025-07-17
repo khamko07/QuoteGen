@@ -459,7 +459,14 @@
                     vietnamese: 'Vietnamese'
                 };
 
-                const prompt = `Generate 6 funny and sarcastic quotes about ${category} in ${languageNames[language]} language. Each quote should be short, witty, and memorable. Return only the quotes, one per line, without numbering or additional text.`;
+                let prompt = '';
+                if (language === 'thai') {
+                    prompt = `คุณคือนักเขียนแคปชั่นและคำคมแนวกวนๆ ที่มีความคิดสร้างสรรค์และเล่นคำเก่ง สร้างคำคมหรือแคปชั่นแนวกวนๆ แบบที่เหมาะสำหรับโพสต์บนโซเชียล เช่น Facebook หรือ Instagram ในหัวข้อ ${category} โดยให้แต่ละแคปชั่นมีความยาวไม่เกิน 30 คำ และควรมีสไตล์ที่ขำขัน กวนประสาท หรือปั่นๆ แต่ยังคงมีความน่ารักและใช้ภาษาทันสมัยของคนยุคนี้\n\nตัวอย่าง:\n- แดดแรงอะหลบได้ แต่ถ้ากวนใจเมื่อไหร่ เดี๋ยวเจอกัน!\n- หน้าร้อนต้องเปิดแอร์ แต่ถ้ารักแกต้องเปิดใจ\n- ไม่ได้อ่อย แค่นั่งเฉยๆ แล้วสวยเอง\n- จีบได้ ไม่ติดแฟน แต่อาจติดหนี้\n- เบอร์เราไม่ต้องขอ ขอแค่ใจพอไหม?\n\nกรุณาสร้าง 6 แคปชั่นหรือคำคมในหัวข้อนี้ โดยแต่ละบรรทัดคือ 1 แคปชั่นเท่านั้น ไม่ต้องมีเลขลำดับหรือข้อความอื่นเพิ่มเติม`;
+                } else if (language === 'english') {
+                    prompt = `You are a creative writer specializing in funny, witty, and playful captions or quotes for social media posts (like Facebook or Instagram) about the topic: ${category}. Each caption should be no more than 30 words, with a humorous, cheeky, or sassy style, but still cute and using modern language.\n\nExamples:\n- Sun's out, sass out!\n- Summer heat? Just turn on the AC. My love? You gotta turn on my heart.\n- Not flirting, just sitting here looking cute.\n- You can try to win me, but you might win my debts too.\n- Don’t ask for my number, ask for my heart.\n\nPlease generate 6 captions or quotes for this topic, one per line, with no numbering or extra text.`;
+                } else if (language === 'vietnamese') {
+                    prompt = `Bạn là một người sáng tác caption và câu nói hài hước, sáng tạo, chuyên viết những câu chất chơi, lầy lội để đăng lên mạng xã hội như Facebook hoặc Instagram về chủ đề: ${category}. Mỗi caption không quá 30 từ, phong cách vui nhộn, cà khịa, nhưng vẫn dễ thương và dùng ngôn ngữ hiện đại.\n\nVí dụ:\n- Nắng thì phải né, còn ai cà khịa thì cứ tới đây!\n- Hè nóng thì bật điều hòa, còn yêu em thì bật chế độ quan tâm.\n- Không thả thính, chỉ ngồi xinh thôi.\n- Tán được thì tán, nhưng dính nợ thì đừng trách.\n- Đừng xin số, xin trái tim em đi.\n\nHãy tạo 6 caption hoặc câu nói cho chủ đề này, mỗi dòng là một caption, không cần số thứ tự hay chú thích gì thêm.`;
+                }
 
                 const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', {
                     method: 'POST',
