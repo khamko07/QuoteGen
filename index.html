@@ -665,9 +665,6 @@
                         <button class="action-btn" onclick="copyToClipboard('${quote.replace(/'/g, "\\'")}')">
                             📋 Copy
                         </button>
-                        <button class="action-btn" onclick="shareQuote('${quote.replace(/'/g, "\\'")}')">
-                            📤 Share
-                        </button>
                     </div>
                 </div>
             `).join('');
@@ -691,21 +688,11 @@
             }
         }
 
-        // Share quote
-        function shareQuote(text) {
-            const encodedText = encodeURIComponent(text);
-            const options = [
-                { name: 'Facebook', url: `https://www.facebook.com/sharer/sharer.php?u=${encodedText}` },
-                { name: 'Twitter', url: `https://twitter.com/intent/tweet?text=${encodedText}` },
-                { name: 'Telegram', url: `https://t.me/share/url?text=${encodedText}` }
-            ];
-            
-            const choice = prompt(`Choose sharing platform:\n${options.map((opt, i) => `${i + 1}. ${opt.name}`).join('\n')}`);
-            const index = parseInt(choice) - 1;
-            
-            if (index >= 0 && index < options.length) {
-                window.open(options[index].url, '_blank');
-            }
+        // Share quote (Facebook: copy to clipboard, open Facebook for manual paste)
+        async function shareQuote(text) {
+            await copyToClipboard(text);
+            showMessage('Quote copied! Paste it in your Facebook post.', 'success');
+            window.open('https://facebook.com/', '_blank');
         }
 
         // Show message
